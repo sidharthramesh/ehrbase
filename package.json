@@ -1,0 +1,6 @@
+{
+    "version": "0.19.2",
+    "scripts": {
+        "release": "standard-version && git push --follow-tags origin main"
+    }
+}
