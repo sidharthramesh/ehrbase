@@ -1,27 +1,27 @@
--- Use this script following the creation and *migrations* of ehr42 db for CLOUD deployment
+-- Use this script following the creation and *migrations* of ehrbase db for CLOUD deployment
 -- Since most cloud service providers (AWS, AZURE, Digital Ocean) support managed PostgreSQL server instances
 -- they generally don't support current extensions: temporal_tables and jsquery (as of 23/09/2019).
 -- create database and roles (you might see an error here, these can be ignored)
 -- the first section of the script is similar to createdb.sql
 -- See README for more details re required application configuration
 
-CREATE ROLE ehr42 WITH LOGIN PASSWORD 'ehr42';
-CREATE DATABASE ehr42 ENCODING 'UTF-8' TEMPLATE template0;
-GRANT ALL PRIVILEGES ON DATABASE ehr42 TO ehr42;
+CREATE ROLE ehrbase WITH LOGIN PASSWORD 'ehrbase';
+CREATE DATABASE ehrbase ENCODING 'UTF-8' TEMPLATE template0;
+GRANT ALL PRIVILEGES ON DATABASE ehrbase TO ehrbase;
 
 -- install the extensions
-\c ehr42
-CREATE SCHEMA IF NOT EXISTS ehr AUTHORIZATION ehr42;
-CREATE SCHEMA IF NOT EXISTS ext AUTHORIZATION ehr42;
+\c ehrbase
+CREATE SCHEMA IF NOT EXISTS ehr AUTHORIZATION ehrbase;
+CREATE SCHEMA IF NOT EXISTS ext AUTHORIZATION ehrbase;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp" SCHEMA ext;
 CREATE EXTENSION IF NOT EXISTS "ltree" SCHEMA ext;
 
 -- setup the search_patch so the extensions can be found
-ALTER DATABASE ehr42 SET search_path TO "$user",public,ext;
+ALTER DATABASE ehrbase SET search_path TO "$user",public,ext;
 -- ensure INTERVAL is ISO8601 encoded
-alter database ehr42 SET intervalstyle = 'iso_8601';
+alter database ehrbase SET intervalstyle = 'iso_8601';
 
-GRANT ALL ON ALL FUNCTIONS IN SCHEMA ext TO ehr42;
+GRANT ALL ON ALL FUNCTIONS IN SCHEMA ext TO ehrbase;
 
 -- load the temporal_tables PLPG/SQL functions to emulate the coded extension
 -- original source: https://github.com/nearform/temporal_tables/blob/master/versioning_function.sql
