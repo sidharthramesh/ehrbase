@@ -192,6 +192,8 @@ public class CompositionServiceImp extends BaseServiceImp implements Composition
 
     logger.debug("Composition created: id={}", compositionId);
 
+    String templateId = composition.getArchetypeDetails().getTemplateId().toString();
+    logger.info("Emitting event openehr.composition.create: templateId: {}, compositionId: {}", templateId, compositionId.toString());
     return compositionId;
   }
 
@@ -324,6 +326,8 @@ public class CompositionServiceImp extends BaseServiceImp implements Composition
     if (!result) {
       throw new InternalServerException("Update failed on composition:" + compositionId);
     }
+    String templateId = composition.getArchetypeDetails().getTemplateId().toString();
+    logger.info("Emitting event openehr.composition.update: templateId: {}, compositionId: {}", templateId, compositionId.toString());
     return new ObjectVersionId(
         compositionId.toString(),
         this.getServerConfig().getNodename(),
@@ -386,6 +390,7 @@ public class CompositionServiceImp extends BaseServiceImp implements Composition
     }
 
     int result;
+    String templateId = compositionAccess.getContent().get(0).getTemplateId();
     if (contributionId != null) { // if custom contribution should be set
       compositionAccess.setContributionId(contributionId);
       try {
@@ -408,6 +413,7 @@ public class CompositionServiceImp extends BaseServiceImp implements Composition
       throw new InternalServerException(
           "Delete failed on composition:" + compositionAccess.getId());
     } else {
+      logger.info("Emitting event openehr.composition.delete: templateId: {}, compositionId: {}", templateId, compositionId.toString());
       return true;
     }
   }

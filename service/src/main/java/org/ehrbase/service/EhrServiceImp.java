@@ -126,7 +126,9 @@ public class EhrServiceImp extends BaseServiceImp implements EhrService {
         try {   // this try block sums up a bunch of operations that can throw errors in the following
             I_EhrAccess ehrAccess = I_EhrAccess.getInstance(getDataAccess(), subjectUuid, systemId, null, null, ehrId);
             ehrAccess.setStatus(status);
-            return ehrAccess.commit(committerId, systemId, DESCRIPTION);
+            UUID uid = ehrAccess.commit(committerId, systemId, DESCRIPTION);
+            logger.info("Emitting event openehr.ehr.create: ehrId: {}", uid.toString());
+            return uid;
         } catch (Exception e) {
             throw new InternalServerException("Could not create an EHR with given parameters.", e);
         }
@@ -257,6 +259,7 @@ public class EhrServiceImp extends BaseServiceImp implements EhrService {
         if (ehrAccess.update(getUserUuid(), getSystemUuid(), contributionId, null, I_ConceptAccess.ContributionChangeType.MODIFICATION, DESCRIPTION).equals(false))
             throw new InternalServerException("Problem updating EHR_STATUS"); //unexpected problem. expected ones are thrown inside of update()
 
+        logger.info("Emitting event openehr.ehr.update: ehrId: {}", ehrId);
         return getEhrStatus(ehrId);
     }
 

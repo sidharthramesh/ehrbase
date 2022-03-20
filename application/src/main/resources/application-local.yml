@@ -15,9 +15,9 @@
 # limitations under the License.
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/ehrbase
-    username: ehrbase
-    password: ehrbase
+    url: jdbc:postgresql://localhost:5432/ehr42
+    username: ehr42
+    password: ehr42
     tomcat:
       maxIdle: 10
       max-active: 50
@@ -34,9 +34,20 @@ server:
     # if true, WHERE clause is using jsquery, false uses SQL only
     useJsQuery: false
     # ignore unbounded item in path starting with one of
-    ignoreIterativeNodeList: 'dummy'
+    ignoreIterativeNodeList: "dummy"
     # how many embedded jsonb_array_elements(..) are acceptable? Recommended == 2
     iterationScanDepth: 20
+web:
+  cors:
+    allowedOriginPatterns:
+      - https://*.test-cors.org
+    allowedMethods:
+      - GET
+      - PUT
+      - DELETE
+      - POST
+      - OPTIONS
+    allowCredentials: "true"
 
 security:
   authType: NONE
@@ -47,7 +58,7 @@ admin-api:
   allowDeleteAll: true
 
 terminology_server:
-  tsUrl: 'https://r4.ontoserver.csiro.au/fhir/'
+  tsUrl: "https://r4.ontoserver.csiro.au/fhir/"
   codePath: '$["expansion"]["contains"][*]["code"]'
   systemPath: '$["expansion"]["contains"][*]["system"]'
   displayPath: '$["expansion"]["contains"][*]["display"]'
