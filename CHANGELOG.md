@@ -1,20 +1,8 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
-adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [unreleased]
-
-### Added
-
-### Changed
-
-### Fixed
-
-- Remove unused Operational Template cache ([#759](https://github.com/ehrbase/ehrbase/pull/759)).
-- Allow update/adding/removal of feeder_audit/links on Composition ([#773](https://github.com/ehrbase/ehrbase/pull/773))
+### [0.19.3](https://github.com/medblocks/ehrbase/compare/v0.19.0-medblocks...v0.19.3) (2022-03-20)
 
 ## [0.19.0] 
 
